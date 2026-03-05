@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Analytics{% endblock %}
+{% block page_title %}Analytics{% endblock %}
+{% block page_sub %}ML trends & subject breakdown &nbsp;<span class="rtag">GET /analytics</span>{% endblock %}
+
+{% block content %}
+<div class="two-col">
+  <div class="panel">
+    <div class="ptitle">📚 Subject-wise Attendance <span class="rtag">GET /api/subject-attendance</span></div>
+    <div class="subj-bars" id="subjBars"></div>
+  </div>
+  <div class="panel">
+    <div class="ptitle">📊 Risk Distribution</div>
+    <div style="display:flex;justify-content:center;margin-bottom:20px">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--border)" stroke-width="20" />
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--r)" stroke-width="20" stroke-dasharray="113 264"
+          stroke-dashoffset="0" stroke-linecap="round" />
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--y)" stroke-width="20" stroke-dasharray="64 264"
+          stroke-dashoffset="-113" stroke-linecap="round" />
+        <circle cx="80" cy="80" r="60" fill="none" stroke="var(--g)" stroke-width="20" stroke-dasharray="87 264"
+          stroke-dashoffset="-177" stroke-linecap="round" />
+        <text x="80" y="76" text-anchor="middle" fill="var(--text)" font-size="18" font-family="Syne"
+          font-weight="800">{{ total_students }}</text>
+        <text x="80" y="93" text-anchor="middle" fill="var(--muted2)" font-size="9"
+          font-family="Space Mono">STUDENTS</text>
+      </svg>
+    </div>
+    <div class="dleg" style="gap:12px">
+      <div class="drow">
+        <div class="dlbl">
+          <div class="ddot" style="background:var(--r);width:10px;height:10px"></div>High Risk (below 65%)
+        </div>
+        <div class="dval" style="color:var(--r)">{{ high_risk }} &nbsp; </div>
+      </div>
+      <div class="drow">
+        <div class="dlbl">
+          <div class="ddot" style="background:var(--y);width:10px;height:10px"></div>Medium (65–75%)
+        </div>
+        <div class="dval" style="color:var(--y)">{{ med_risk }} &nbsp; </div>
+      </div>
+      <div class="drow">
+        <div class="dlbl">
+          <div class="ddot" style="background:var(--g);width:10px;height:10px"></div>Low Risk (above 75%)
+        </div>
+        <div class="dval" style="color:var(--g)">{{ low_risk }} &nbsp; </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>loadSubjectAttendance();</script>
+{% endblock %}

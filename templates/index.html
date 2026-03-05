@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_sub %}Real-time attendance overview &nbsp;<span class="rtag">GET /</span>{% endblock %}
+
+{% block content %}
+<!-- Stat Cards -->
+<div class="stat-grid">
+  <div class="sc cc">
+    <div class="sc-lbl">Overall Attendance</div>
+    <div class="sc-val" id="sv-att">—</div>
+    <div class="sc-sub" id="sv-att-s"></div>
+  </div>
+  <div class="sc cr">
+    <div class="sc-lbl">At-Risk Students</div>
+    <div class="sc-val" id="sv-risk">—</div>
+    <div class="sc-sub" id="sv-risk-s"></div>
+  </div>
+  <div class="sc cg">
+    <div class="sc-lbl">Perfect Attendance</div>
+    <div class="sc-val" id="sv-perf">—</div>
+    <div class="sc-sub" id="sv-perf-s"></div>
+  </div>
+  <div class="sc cp">
+    <div class="sc-lbl">Alerts Today</div>
+    <div class="sc-val" id="sv-alrt">—</div>
+    <div class="sc-sub" id="sv-alrt-s"></div>
+  </div>
+</div>
+
+<div class="two-col">
+  <!-- Chart -->
+  <div class="panel">
+    <div class="ptitle">📈 Weekly Trend <span class="psub">/ last 8 weeks</span> <span class="rtag">GET
+        /api/weekly-trend</span></div>
+    <div class="ctabs">
+      <div class="ctab active" onclick="switchTab(this)">All Classes</div>
+      <div class="ctab" onclick="switchTab(this)">CS-101</div>
+      <div class="ctab" onclick="switchTab(this)">DS-201</div>
+      <div class="ctab" onclick="switchTab(this)">AI-301</div>
+    </div>
+    <div class="chart-area">
+      <div class="chart-bars" id="chartBars"></div>
+    </div>
+    <div class="cleg">
+      <div class="li">
+        <div class="ld" style="background:var(--g)"></div>Present
+      </div>
+      <div class="li">
+        <div class="ld" style="background:var(--r);opacity:.75"></div>Absent
+      </div>
+      <div class="li">
+        <div class="ld" style="background:var(--y);opacity:.85"></div>Late
+      </div>
+    </div>
+  </div>
+
+  <div class="side-col" style="display: flex; flex-direction: column; gap: 20px;">
+    <!-- The original Risk List and Alert Feed panels are removed from here -->
+  </div>
+</div>
+
+{% if current_user.role == 'admin' %}
+<div class="two-col">
+  <div class="panel">
+    <div class="ptitle">⚠️ At-Risk Students <span class="rtag">GET /api/students?risk=high</span></div>
+    <div class="risk-list" id="riskList"></div>
+  </div>
+  <div class="panel">
+    <div class="ptitle" style="justify-content:space-between">
+      <span>🔔 System Alerts <span class="rtag">GET /api/alerts</span></span>
+      <span class="afi-badge critical">!</span>
+    </div>
+    <div class="alert-feed" id="liveAlerts"></div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  loadStats();
+  loadChart();
+  {% if current_user.role == 'admin' %}
+  loadRiskList();
+  loadAlertFeed('liveAlerts');
+  {% endif %}
+</script>
+{% endblock %}

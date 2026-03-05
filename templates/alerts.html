@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Alerts{% endblock %}
+{% block page_title %}Alerts{% endblock %}
+{% block page_sub %}Live system notifications &nbsp;<span class="rtag">GET /alerts</span>{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="ptitle">🔔 All System Alerts <span class="rtag">GET /api/alerts</span></div>
+  <div id="alertFullFeed" class="alert-full-feed"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>loadAlertsPage();</script>
+{% endblock %}

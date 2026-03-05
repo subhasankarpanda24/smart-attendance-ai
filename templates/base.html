@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AttendIQ – {% block title %}{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-icon">📊</div>
+      <div>
+        <div class="sb-title">AttendIQ</div>
+        <div class="sb-sub">v2.4.1</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <a href="/" class="nav-item {% if active=='dashboard' %}active{% endif %}"><span
+          class="nav-ico">🏠</span><span>Dashboard</span></a>
+      <a href="/students" class="nav-item {% if active=='students'  %}active{% endif %}"><span
+          class="nav-ico">👥</span><span>Students</span></a>
+      {% if current_user.role == 'admin' %}
+      <a href="/analytics" class="nav-item {% if active=='analytics' %}active{% endif %}"><span
+          class="nav-ico">📈</span><span>Analytics</span></a>
+      <a href="/alerts" class="nav-item {% if active=='alerts'    %}active{% endif %}">
+        <span class="nav-ico">🔔</span><span>Alerts</span>
+        <span class="nav-badge" id="alertBadge">—</span>
+      </a>
+      {% endif %}
+    </nav>
+    <div class="sb-foot">
+      <div class="user-info">
+        <div class="user-avatar">{{ current_user.name[0] }}</div>
+        <div class="user-details">
+          <div class="user-name">{{ current_user.name }}</div>
+          <div class="user-role">{{ current_user.role }}</div>
+        </div>
+      </div>
+      <div class="sdot-row"><span class="sdot"></span><span class="sdot-txt">Live Monitoring</span></div>
+      <div class="stime" id="syncTime">--:--:--</div>
+      <a href="/logout" class="logout-btn">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h2 class="page-title">{% block page_title %}{% endblock %}</h2>
+        <p class="page-sub">{% block page_sub %}{% endblock %}</p>
+      </div>
+      <div class="sem-badge">SEM-II · 2025–26 · CS Dept</div>
+    </div>
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="toast"></div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>

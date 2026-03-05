@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Student Profile - {{ student.name }}{% endblock %}
+{% block page_title %}{{ student.name }}{% endblock %}
+{% block page_sub %}Student ID: {{ student.id }} &nbsp;<span class="rtag">GET /student/{{ student.id }}</span>{%
+endblock %}
+
+{% block content %}
+<div class="two-col">
+    <div class="panel">
+        <div class="ptitle">📈 4-Week Attendance Trajectory</div>
+        <div style="height: 250px; width: 100%;">
+            <canvas id="attendanceChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="ptitle">🎯 Profile Summary</div>
+
+        <div class="afi {% if student.risk == 'high' %}critical{% elif student.risk == 'medium' %}warning{% else %}success{% endif %}"
+            style="margin: 0;">
+            <div class="afi-body">
+                <div class="afi-title" style="font-size:18px;">{{ student.attendance }}% Overall Attendance</div>
+                <div class="afi-time" style="font-size:12px;">Last updated: {{ student.last_updated }}</div>
+            </div>
+        </div>
+
+        {% if student.trend_alert %}
+        <div class="afi critical" style="margin: 0; border: 1px solid var(--r); background: rgba(239,68,68,.05);">
+            <div class="afi-ico">⚠️</div>
+            <div class="afi-body">
+                <div class="afi-title" style="color:var(--r);">High Risk Trajectory Detected</div>
+                <div class="afi-time" style="color:var(--r);">{{ student.trend_alert }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div>
+            <div class="sc-lbl" style="margin-top: 10px;">Subject Deficits (Absences)</div>
+            <div class="dleg" style="gap:10px; margin-top: 10px;">
+                {% for subject, count in subject_absences.items() %}
+                <div class="drow" style="background: rgba(0,0,0,.02); padding: 8px 12px; border-radius: 8px;">
+                    <div class="dlbl">{{ subject }}</div>
+                    <div class="dval" style="color: var(--text);">{{ count }} missed</div>
+                </div>
+                {% else %}
+                <div class="drow">
+                    <div class="dlbl">No absences recorded yet.</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const labels = {{ chart_labels | tojson }};
+    const dataPoints = {{ chart_data | tojson }};
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Weekly Average %',
+                data: dataPoints,
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246, 0.1)',
+                borderWidth: 3,
+                pointBackgroundColor: '#3b82f6',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 0,
+                    max: 100,
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    ticks: { color: '#64748b', font: { family: 'Syne' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#64748b', font: { family: 'Space Mono', size: 10 } }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1e293b',
+                    titleFont: { family: 'Syne' },
+                    bodyFont: { family: 'Syne' },
+                    padding: 10,
+                    cornerRadius: 8
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
