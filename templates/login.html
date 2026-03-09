@@ -1,45 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Smart Attendance</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; }
-        .login-card { border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .btn-login { background: linear-gradient(135deg, #667eea, #764ba2); border: none; }
-        .btn-login:hover { opacity: 0.9; }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
 </head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card login-card p-4">
-                    <div class="text-center mb-4">
-                        <h2>🎓 Smart Attendance</h2>
-                        <p class="text-muted">Sign in to your account</p>
+
+<body class="login-page">
+
+    <!-- Animated wave layers -->
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+
+    <!-- Floating orbs -->
+    <div class="orb orb1" style="display:block"></div>
+    <div class="orb orb2" style="display:block"></div>
+
+    <!-- Brand mark -->
+    <div class="brand">
+        <span class="brand-icon">📊</span>
+        <div>
+            <div class="brand-name">AttendIQ</div>
+            <div class="brand-tag">Early Intervention System</div>
+        </div>
+    </div>
+
+    <!-- Live status bar -->
+    <div class="live-bar">
+        <span class="sdot"></span>
+        <span class="sdot-txt">All systems operational</span>
+        <span class="stime" id="ltime">--:--:--</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="container login-container">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+
+                <div class="login-card">
+
+                    <!-- Header -->
+                    <div class="lc-head">
+                        <div class="lc-title">Welcome back</div>
+                        <div class="lc-sub">Sign in to your account to continue</div>
                     </div>
+
+                    <!-- Semester badge -->
+                    <div class="sem-badge">
+                        <span class="sem-dot"></span>
+                        Semester Active · AY 2025–26
+                    </div>
+
+                    <!-- Flash messages (Jinja2) -->
                     {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            <div class="alert alert-danger">{{ messages[0] }}</div>
-                        {% endif %}
+                    {% if messages %}
+                    <div class="lc-alert">
+                        <span class="lc-alert-ico">⚠</span>
+                        <span>{{ messages[0] }}</span>
+                    </div>
+                    {% endif %}
                     {% endwith %}
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+
+                    <!-- Login form -->
+                    <form method="POST" novalidate>
+
+                        <div class="lc-group">
+                            <label class="lc-label" for="username">Username</label>
+                            <div class="lc-input-wrap">
+                                <span class="lc-ico">👤</span>
+                                <input type="text" id="username" name="username" class="lc-input"
+                                    placeholder="Enter your username" autocomplete="username" required />
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+
+                        <div class="lc-group">
+                            <label class="lc-label" for="password">Password</label>
+                            <div class="lc-input-wrap">
+                                <span class="lc-ico">🔒</span>
+                                <input type="password" id="password" name="password" class="lc-input"
+                                    placeholder="Enter your password" autocomplete="current-password" required />
+                                <button type="button" class="lc-toggle-pw" id="togglePw"
+                                    title="Show/hide password">👁</button>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-login btn-primary w-100">Login</button>
+
+                        <div class="lc-options">
+                            <label class="lc-check-wrap">
+                                <input type="checkbox" name="remember" />
+                                <span class="lc-check-lbl">Remember me</span>
+                            </label>
+                            <a href="#" class="lc-forgot">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="lc-btn">
+                            Sign in to Dashboard →
+                        </button>
+
                     </form>
+
+                    <!-- Card footer -->
+                    <div class="lc-foot">
+                        <span class="sdot sdot-sm"></span>
+                        <span class="lc-foot-txt">Secure · Encrypted · FERPA compliant</span>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
 </body>
+
 </html>

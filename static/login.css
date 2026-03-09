@@ -1,0 +1,505 @@
+/* ════════════════════════════════════════════════════════════════════════
+   LOGIN PAGE
+   ════════════════════════════════════════════════════════════════════════ */
+
+body.login-page {
+    background: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── Wave animations (preserved from original) ───────────────────────── */
+@keyframes wave1 {
+    0% {
+        transform: skewX(-55deg) scale(1);
+    }
+
+    50% {
+        transform: skewX(-50deg) scale(1.05);
+    }
+
+    100% {
+        transform: skewX(-55deg) scale(1);
+    }
+}
+
+@keyframes wave2 {
+    0% {
+        transform: skewX(-45deg) translateY(0);
+    }
+
+    50% {
+        transform: skewX(-40deg) translateY(-28px);
+    }
+
+    100% {
+        transform: skewX(-45deg) translateY(0);
+    }
+}
+
+@keyframes wave3 {
+    0% {
+        transform: skewX(-65deg) scale(1);
+    }
+
+    50% {
+        transform: skewX(-60deg) scale(1.06);
+    }
+
+    100% {
+        transform: skewX(-65deg) scale(1);
+    }
+}
+
+@keyframes wave4 {
+    0% {
+        transform: skewX(-65deg);
+        border-radius: 40%;
+    }
+
+    50% {
+        transform: skewX(-60deg) rotateX(50deg);
+        border-radius: 90% 40% 90% 40%;
+    }
+
+    100% {
+        transform: skewX(-65deg);
+        border-radius: 40%;
+    }
+}
+
+body.login-page .wave {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 40%;
+}
+
+body.login-page .wave1 {
+    width: 130vw;
+    height: 130vw;
+    background: rgba(16, 185, 129, .055);
+    top: -55vw;
+    left: -25vw;
+    animation: wave1 9s ease-in-out infinite;
+}
+
+body.login-page .wave2 {
+    width: 110vw;
+    height: 110vw;
+    background: rgba(139, 92, 246, .04);
+    bottom: -45vw;
+    right: -25vw;
+    animation: wave2 11s ease-in-out infinite;
+    animation-delay: -4s;
+}
+
+body.login-page .wave3 {
+    width: 90vw;
+    height: 90vw;
+    background: rgba(59, 130, 246, .03);
+    top: -20vw;
+    right: -20vw;
+    animation: wave3 7s ease-in-out infinite;
+    animation-delay: -2s;
+}
+
+body.login-page .wave4 {
+    width: 80vw;
+    height: 80vw;
+    background: rgba(16, 185, 129, .04);
+    bottom: -30vw;
+    left: -10vw;
+    animation: wave4 13s ease-in-out infinite;
+    animation-delay: -6s;
+}
+
+/* ── Brand mark (top-left) ───────────────────────────────────────────── */
+body.login-page .brand {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeUp .5s ease both;
+}
+
+body.login-page .brand-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+body.login-page .brand-name {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.3px;
+}
+
+body.login-page .brand-tag {
+    font-variant-numeric: tabular-nums;
+    font-size: 9px;
+    color: rgba(255, 255, 255, .28);
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* ── Live status bar (bottom-left) ──────────────────────────────────── */
+body.login-page .live-bar {
+    position: fixed;
+    bottom: 28px;
+    left: 32px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp .5s .35s ease both;
+    opacity: 0;
+}
+
+body.login-page .sdot-txt {
+    font-size: 11px;
+    color: rgba(255, 255, 255, .32);
+    font-variant-numeric: tabular-nums;
+}
+
+body.login-page .stime {
+    font-size: 11px;
+    color: rgba(255, 255, 255, .2);
+    font-variant-numeric: tabular-nums;
+    margin-left: 4px;
+}
+
+/* ── Layout container ────────────────────────────────────────────────── */
+body.login-page .login-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 100px 16px 80px;
+}
+
+/* ── Card ────────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.login-page .login-card {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 40px 36px 32px;
+    box-shadow:
+        0 32px 80px rgba(0, 0, 0, .45),
+        0 0 0 1px rgba(255, 255, 255, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+    animation: fadeUp .5s .1s ease both;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top green accent line */
+body.login-page .login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--g) 0%, transparent 70%);
+}
+
+/* ── Card header ─────────────────────────────────────────────────────── */
+body.login-page .lc-head {
+    margin-bottom: 18px;
+}
+
+body.login-page .lc-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.4px;
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+body.login-page .lc-sub {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ── Semester badge ──────────────────────────────────────────────────── */
+body.login-page .sem-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(139, 92, 246, .08);
+    color: var(--p);
+    border: 1px solid rgba(139, 92, 246, .18);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-variant-numeric: tabular-nums;
+}
+
+body.login-page .sem-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--p);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+/* ── Flash alert ─────────────────────────────────────────────────────── */
+body.login-page .lc-alert {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(239, 68, 68, .07);
+    border-left: 3px solid var(--r);
+    color: var(--r);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    animation: fadeUp .3s ease;
+}
+
+body.login-page .lc-alert-ico {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* ── Form groups ─────────────────────────────────────────────────────── */
+body.login-page .lc-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+body.login-page .lc-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+body.login-page .lc-input-wrap {
+    position: relative;
+}
+
+body.login-page .lc-ico {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    pointer-events: none;
+    transition: opacity .2s;
+    opacity: .6;
+}
+
+body.login-page .lc-input {
+    width: 100%;
+    padding: 11px 42px 11px 38px;
+    background: rgba(0, 0, 0, .02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Inter', system-ui, sans-serif;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+body.login-page .lc-input::placeholder {
+    color: var(--muted2);
+}
+
+body.login-page .lc-input:focus {
+    border-color: rgba(16, 185, 129, .45);
+    background: rgba(16, 185, 129, .02);
+    box-shadow: 0 0 0 3px var(--glow);
+}
+
+body.login-page .lc-input:focus+.lc-ico {
+    opacity: 1;
+}
+
+body.login-page .lc-toggle-pw {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted2);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color .2s;
+    line-height: 1;
+}
+
+body.login-page .lc-toggle-pw:hover {
+    color: var(--text);
+}
+
+/* ── Options row ─────────────────────────────────────────────────────── */
+body.login-page .lc-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+body.login-page .lc-check-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+body.login-page .lc-check-wrap input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    flex-shrink: 0;
+}
+
+body.login-page .lc-check-wrap input[type="checkbox"]:checked {
+    background: var(--g);
+    border-color: var(--g);
+}
+
+body.login-page .lc-check-wrap input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+body.login-page .lc-check-lbl {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+body.login-page .lc-forgot {
+    font-size: 12px;
+    color: var(--a);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity .2s;
+}
+
+body.login-page .lc-forgot:hover {
+    opacity: .7;
+}
+
+/* ── Submit button ───────────────────────────────────────────────────── */
+body.login-page .lc-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--g) 0%, #0ea271 100%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    font-family: 'Inter', system-ui, sans-serif;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, .4);
+    position: relative;
+    overflow: hidden;
+}
+
+body.login-page .lc-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .14) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+body.login-page .lc-btn:hover {
+    opacity: .88;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(16, 185, 129, .48);
+}
+
+body.login-page .lc-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(16, 185, 129, .3);
+}
+
+/* ── Card footer ─────────────────────────────────────────────────────── */
+body.login-page .lc-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+body.login-page .lc-foot-txt {
+    font-size: 11px;
+    color: var(--muted2);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    body.login-page .login-card {
+        padding: 30px 22px 26px;
+    }
+
+    body.login-page .brand {
+        top: 20px;
+        left: 20px;
+    }
+
+    body.login-page .live-bar {
+        bottom: 20px;
+        left: 20px;
+    }
+}
