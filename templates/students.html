@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Students{% endblock %}
 {% block page_title %}Students{% endblock %}
-{% block page_sub %}Registry & attendance marking &nbsp;<span class="rtag">GET /students</span>{% endblock %}
+{% block page_sub %}Registry & attendance marking{% endblock %}
 
 {% block content %}
 <div class="panel">
   <div class="ptitle" style="justify-content:space-between">
-    <span>👥 Student Registry <span class="rtag">GET /api/students</span></span>
+    <span>👥 Student Registry</span>
     {% if current_user.role == 'admin' %}
     <button class="add-btn" onclick="openAddModal()">+ Add Student</button>
     {% endif %}

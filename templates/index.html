@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block page_title %}Dashboard{% endblock %}
-{% block page_sub %}Real-time attendance overview &nbsp;<span class="rtag">GET /</span>{% endblock %}
+{% block page_sub %}Real-time attendance overview{% endblock %}
 
 {% block content %}
 <!-- Stat Cards -->
@@ -31,8 +31,7 @@
 <div class="two-col">
   <!-- Chart -->
   <div class="panel">
-    <div class="ptitle">📈 Weekly Trend <span class="psub">/ last 8 weeks</span> <span class="rtag">GET
-        /api/weekly-trend</span></div>
+    <div class="ptitle">📈 Weekly Trend <span class="psub">/ last 8 weeks</span></div>
     <div class="ctabs">
       <div class="ctab active" onclick="switchTab(this)">All Classes</div>
       <div class="ctab" onclick="switchTab(this)">CS-101</div>
@@ -55,20 +54,18 @@
     </div>
   </div>
 
-  <div class="side-col" style="display: flex; flex-direction: column; gap: 20px;">
-    <!-- The original Risk List and Alert Feed panels are removed from here -->
-  </div>
+  <div class="side-col" style="display:flex;flex-direction:column;gap:20px;"></div>
 </div>
 
 {% if current_user.role == 'admin' %}
 <div class="two-col">
   <div class="panel">
-    <div class="ptitle">⚠️ At-Risk Students <span class="rtag">GET /api/students?risk=high</span></div>
+    <div class="ptitle">⚠️ At-Risk Students</div>
     <div class="risk-list" id="riskList"></div>
   </div>
   <div class="panel">
     <div class="ptitle" style="justify-content:space-between">
-      <span>🔔 System Alerts <span class="rtag">GET /api/alerts</span></span>
+      <span>🔔 System Alerts</span>
       <span class="afi-badge critical">!</span>
     </div>
     <div class="alert-feed" id="liveAlerts"></div>
@@ -79,11 +76,12 @@
 
 {% block scripts %}
 <script>
+  const currentUserRole = "{{ current_user.role }}";
   loadStats();
   loadChart();
-  {% if current_user.role == 'admin' %}
-  loadRiskList();
-  loadAlertFeed('liveAlerts');
-  {% endif %}
+  if (currentUserRole === 'admin') {
+    loadRiskList();
+    loadAlertFeed('liveAlerts');
+  }
 </script>
 {% endblock %}

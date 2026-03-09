@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AttendIQ – {% block title %}{% endblock %}</title>
+  <title>Smart Attendance – {% block title %}{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -17,19 +17,19 @@
     <div class="sb-logo">
       <div class="sb-icon">📊</div>
       <div>
-        <div class="sb-title">AttendIQ</div>
+        <div class="sb-title">Smart Attendance</div>
         <div class="sb-sub">v2.4.1</div>
       </div>
     </div>
     <nav class="sb-nav">
       <a href="/" class="nav-item {% if active=='dashboard' %}active{% endif %}"><span
           class="nav-ico">🏠</span><span>Dashboard</span></a>
-      <a href="/students" class="nav-item {% if active=='students'  %}active{% endif %}"><span
+      <a href="/students" class="nav-item {% if active=='students' %}active{% endif %}"><span
           class="nav-ico">👥</span><span>Students</span></a>
       {% if current_user.role == 'admin' %}
       <a href="/analytics" class="nav-item {% if active=='analytics' %}active{% endif %}"><span
           class="nav-ico">📈</span><span>Analytics</span></a>
-      <a href="/alerts" class="nav-item {% if active=='alerts'    %}active{% endif %}">
+      <a href="/alerts" class="nav-item {% if active=='alerts' %}active{% endif %}">
         <span class="nav-ico">🔔</span><span>Alerts</span>
         <span class="nav-badge" id="alertBadge">—</span>
       </a>

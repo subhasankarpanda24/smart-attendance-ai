@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Analytics{% endblock %}
 {% block page_title %}Analytics{% endblock %}
-{% block page_sub %}ML trends & subject breakdown &nbsp;<span class="rtag">GET /analytics</span>{% endblock %}
+{% block page_sub %}ML trends & subject breakdown{% endblock %}
 
 {% block content %}
 <div class="two-col">
   <div class="panel">
-    <div class="ptitle">📚 Subject-wise Attendance <span class="rtag">GET /api/subject-attendance</span></div>
+    <div class="ptitle">📚 Subject-wise Attendance</div>
     <div class="subj-bars" id="subjBars"></div>
   </div>
   <div class="panel">
@@ -31,24 +31,22 @@
         <div class="dlbl">
           <div class="ddot" style="background:var(--r);width:10px;height:10px"></div>High Risk (below 65%)
         </div>
-        <div class="dval" style="color:var(--r)">{{ high_risk }} &nbsp; </div>
+        <div class="dval" style="color:var(--r)">{{ high_risk }}</div>
       </div>
       <div class="drow">
         <div class="dlbl">
           <div class="ddot" style="background:var(--y);width:10px;height:10px"></div>Medium (65–75%)
         </div>
-        <div class="dval" style="color:var(--y)">{{ med_risk }} &nbsp; </div>
+        <div class="dval" style="color:var(--y)">{{ med_risk }}</div>
       </div>
       <div class="drow">
         <div class="dlbl">
           <div class="ddot" style="background:var(--g);width:10px;height:10px"></div>Low Risk (above 75%)
         </div>
-        <div class="dval" style="color:var(--g)">{{ low_risk }} &nbsp; </div>
+        <div class="dval" style="color:var(--g)">{{ low_risk }}</div>
       </div>
     </div>
   </div>
-</div>
-
 </div>
 {% endblock %}
 
